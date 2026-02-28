@@ -1,216 +1,449 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Aijaz Khan | Profile</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-}
+  :root{
+    --bg:#0b0f14;
+    --card:#0f1720;
+    --muted:#99a0a6;
+    --accent1:#00c6ff;
+    --accent2:#0072ff;
+    --glass: rgba(255,255,255,0.03);
+    --radius:14px;
+    --max-width:1100px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    background: linear-gradient(180deg, var(--bg) 0%, #071017 65%);
+    color:#e6eef6;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.5;
+  }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background: #0f0f0f;
-    color: #fff;
-}
+  /* layout */
+  .wrap{max-width:var(--max-width);margin:0 auto;padding:32px;}
+  header.topbar{
+    position:sticky;top:0;z-index:40;
+    backdrop-filter: blur(6px);
+    background:linear-gradient(180deg, rgba(7,10,13,0.6), rgba(7,10,13,0.15));
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:12px 16px;
+  }
+  .brand{display:flex;align-items:center;gap:12px;font-weight:700}
+  .logo{
+    width:46px;height:46px;border-radius:10px;display:inline-grid;place-items:center;
+    background:linear-gradient(135deg,var(--accent2),var(--accent1));
+    box-shadow:0 6px 24px rgba(0,198,255,0.08), inset 0 -6px 18px rgba(255,255,255,0.04);
+    font-weight:700;color:#03121a;font-size:16px;
+  }
+  nav ul{display:flex;gap:18px;list-style:none;padding:0;margin:0}
+  nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:14px;}
+  nav a:hover{color:var(--accent1);transform:translateY(-2px);transition:.18s}
 
-header {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(to right, #141e30, #243b55);
-    text-align: center;
-}
+  /* hero */
+  .hero{
+    min-height:72vh;
+    display:grid;
+    grid-template-columns: 1fr 380px;
+    gap:28px;
+    align-items:center;
+    padding:72px 0;
+  }
+  .hero-left{
+    padding-right:8px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:14px;
+  }
+  .eyebrow{
+    display:inline-block;background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    color:#001820;padding:6px 12px;border-radius:999px;font-weight:700;font-size:13px;
+    box-shadow:0 10px 30px rgba(0,198,255,0.06);
+  }
+  h1.big{
+    font-size:clamp(28px,4.6vw,44px);
+    margin:0;line-height:1.02;
+    background:linear-gradient(90deg,#fff, #cbefff 40%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  p.lead{color:var(--muted);font-size:16px;margin:0 0 6px;max-width:64ch}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;border:0;
+    cursor:pointer;font-weight:700;background:linear-gradient(90deg,var(--accent2),var(--accent1));
+    color:#00212a;box-shadow:0 10px 30px rgba(0,198,255,0.12);transition:transform .18s;
+  }
+  .btn.secondary{
+    background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);
+  }
+  .btn:active{transform:translateY(1px)}
+  .hero-stats{display:flex;gap:16px;margin-top:14px;align-items:center;flex-wrap:wrap}
+  .stat{background:var(--glass);padding:10px 14px;border-radius:12px;color:var(--muted);font-weight:600}
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.03);
+    border-radius:var(--radius);
+    padding:20px;
+    box-shadow: 0 10px 30px rgba(2,6,12,0.6);
+  }
 
-header h1 {
-    font-size: 3rem;
-}
+  /* right column: quick profile card */
+  .profile-card{
+    display:flex;flex-direction:column;gap:12px;padding:22px;
+    height:100%;
+    justify-content:center;
+    align-items:center;
+  }
+  .avatar{
+    width:120px;height:120px;border-radius:14px;overflow:hidden;flex-shrink:0;
+    background:linear-gradient(135deg,var(--accent1),var(--accent2));
+    box-shadow: 0 18px 40px rgba(2,10,24,0.6);
+    display:grid;place-items:center;font-weight:800;color:#00121b;font-size:22px;
+  }
+  .profile-meta{text-align:center}
+  .tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+  .pill{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.02);font-weight:600;color:var(--muted);font-size:13px}
 
-header p {
-    margin-top: 10px;
-    font-weight: 300;
-    color: #ddd;
-}
+  /* sections */
+  section{padding:64px 0;border-bottom:1px solid rgba(255,255,255,0.02)}
+  .section-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .section-head h2{margin:0;font-size:20px;color:#fff}
+  .section-sub{color:var(--muted);font-size:14px}
 
-button {
-    margin-top: 20px;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 30px;
-    background: linear-gradient(to right, #0072ff, #00c6ff);
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
-}
+  /* about grid */
+  .about-grid{display:grid;grid-template-columns: 1fr 340px;gap:28px;align-items:start}
+  .about-text p{color:var(--muted);margin-bottom:12px}
+  .info-card{background:linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.02));
+            padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+  .info-row{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+  .info-row strong{min-width:110px;color:#fff}
 
-button:hover {
-    transform: scale(1.05);
-}
+  /* values area: cards */
+  .values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+  .value-card{padding:20px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.02)}
 
-section {
-    padding: 80px 10%;
-}
+  /* gallery */
+  .gallery{display:grid;grid-template-columns: repeat(auto-fit,minmax(160px,1fr));gap:12px;align-items:start}
+  .gallery img{width:100%;height:160px;object-fit:cover;border-radius:10px;cursor:pointer;display:block;border:1px solid rgba(255,255,255,0.02);transition:transform .25s, box-shadow .25s}
+  .gallery img:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(3,12,20,0.6)}
 
-h2 {
-    margin-bottom: 20px;
-    font-size: 2rem;
-    border-left: 5px solid #00c6ff;
-    padding-left: 15px;
-}
+  /* photography CTA */
+  .phot-cta{display:flex;align-items:center;gap:18px;justify-content:space-between;flex-wrap:wrap}
+  .phot-cta p{color:var(--muted);max-width:70%}
 
-p {
-    line-height: 1.8;
-    color: #ccc;
-    margin-bottom: 15px;
-}
+  footer{padding:28px 0;color:var(--muted);text-align:center;font-size:14px}
 
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
+  /* Modal lightbox */
+  .lightbox{
+    position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+    background:linear-gradient(180deg, rgba(2,6,10,0.8), rgba(2,6,10,0.94));z-index:90;padding:30px;
+  }
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:92%;max-height:82vh;border-radius:10px;box-shadow:0 30px 80px rgba(2,8,16,0.7)}
+  .lb-close{position:fixed;right:28px;top:20px;font-size:28px;color:#fff;cursor:pointer;z-index:91}
+  .lb-nav{position:fixed;left:0;right:0;bottom:40px;display:flex;justify-content:center;gap:12px;z-index:91}
+  .lb-btn{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04);padding:10px 14px;border-radius:10px;color:var(--muted);cursor:pointer;font-weight:700}
 
-.gallery img {
-    width: 100%;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: 0.4s;
-}
+  /* responsive */
+  @media (max-width:980px){
+    .hero{grid-template-columns:1fr;gap:18px;padding:42px 0}
+    .about-grid{grid-template-columns:1fr}
+    .hero-stats{flex-wrap:wrap}
+    nav ul{display:none}
+    .profile-card{align-items:flex-start}
+  }
+  @media (max-width:480px){
+    .gallery img{height:120px}
+    .avatar{width:96px;height:96px}
+    .wrap{padding:20px}
+    .logo{width:40px;height:40px;font-size:14px}
+  }
 
-.gallery img:hover {
-    transform: scale(1.05);
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 999;
-    padding-top: 60px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.9);
-}
-
-.modal img {
-    display: block;
-    margin: auto;
-    max-width: 80%;
-    border-radius: 10px;
-}
-
-.close {
-    position: absolute;
-    top: 20px;
-    right: 40px;
-    font-size: 35px;
-    color: white;
-    cursor: pointer;
-}
-
-footer {
-    text-align: center;
-    padding: 30px;
-    background: #111;
-    color: #888;
-}
+  /* small motion preference respect */
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important}
+  }
 </style>
 </head>
-
 <body>
 
-<header>
-    <h1>Aijaz Khan</h1>
-    <button onclick="document.getElementById('about').scrollIntoView();">Explore</button>
+<header class="topbar">
+  <div class="wrap nav" role="navigation" aria-label="Main Navigation">
+    <div class="brand" aria-hidden="true">
+      <div class="logo">AK</div>
+      <div>
+        <div style="font-size:13px;color:var(--muted)">Aijaz Khan</div>
+        <div style="font-size:12px;color:var(--muted)">Security Engineer</div>
+      </div>
+    </div>
+
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#personal">Personal</a></li>
+        <li><a href="#values">Values</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+      </ul>
+    </nav>
+
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="btn" onclick="document.getElementById('contact')?.scrollIntoView({behavior:'smooth'})">Contact</button>
+      <button class="btn secondary" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">Explore</button>
+    </div>
+  </div>
 </header>
 
-<section id="about">
-    <h2>About Me</h2>
-    <p>
-        I work as a Security Engineer, where I focus on building and improving secure systems. While I am passionate about my profession, I try not to let work define my entire personality.
-    </p>
-    <p>
-        Outside of work, I enjoy long trekking adventures, recently completed my dream trek to Mount Everest Base Camp, bike rides, and exploring new places. Being in nature helps me reset and stay grounded. I also enjoy playing the guitar, reading books, and constantly learning new things that broaden my perspective. I have a deep appreciation for Urdu poetry, as I find it beautifully expresses emotions and depth in a unique way.
-    </p>
-    <p>
-        Staying active, eating clean, and maintaining a disciplined routine are important parts of my lifestyle. I value spending quality time with family and close friends, and I try to stay involved in social work whenever possible, as giving back to the community matters to me.
-    </p>
-</section>
+<main class="wrap" id="top">
 
-<section>
-    <h2>Personal Life</h2>
-    <p>
-        I grew up in the North-Eastern part of India, Arunachal Pradesh. I spent the first 23 years of my life there before moving to Bangalore, where I am currently settled.
-    </p>
-    <p>
-        My father is a retired government engineer, and my mother is a homemaker. I have one elder brother who works at Dell and lives in Delhi, and a younger sister who is pursuing her Bachelor's degree in Computer Science from VIT.
-    </p>
-</section>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-left">
+      <span class="eyebrow">Research · Travel · Exploration</span>
+      <h1 id="hero-title" class="big">Hi, I'm <span style="color:transparent;background:linear-gradient(90deg,var(--accent1),#bfe9ff);-webkit-background-clip:text;background-clip:text">Aijaz Khan</span> — Security Engineer & Explorer</h1>
+      <p class="lead">
+        I design and improve secure systems and automation for vulnerability discovery. Outside work, I’m an avid trekker, biker, and photographer who loves Urdu poetry and believes in continuously learning and unlearning about life.
+      </p>
 
-<section>
-    <h2>Personal Values</h2>
-    <p>
-        I am looking for someone with whom I can build something real and meaningful. I do not believe two people are simply made for each other. I believe they choose each other, understand each other better with time, and grow into compatibility through effort and respect.
-    </p>
-    <p>
-        I also believe that two people will always have some things in common and some things completely different. What matters is enjoying the process of discovering those similarities and understanding the differences. Finding more common ground over time and appreciating each other’s individuality makes the bond stronger. There is something beautiful about learning together and finding joy in the small, everyday moments we share.
-    </p>
-    <p>
-        I hope to find a partner with whom I can travel, explore new places, try new hobbies, and enjoy both the exciting and ordinary moments of life, including the simple everyday chores like cooking and managing things together. I want us to grow together both personally and professionally, being each other’s biggest supporters, standing by one another during challenges, and celebrating each other’s achievements.
-    </p>
-</section>
-
-<section>
-    <h2>Photo Gallery</h2>
-    <div class="gallery">
-        <img src="photo1.jpg" onclick="openModal(this.src)">
-        <img src="photo2.jpg" onclick="openModal(this.src)">
-        <img src="photo3.jpg" onclick="openModal(this.src)">
-        <img src="photo4.jpg" onclick="openModal(this.src)">
-        <img src="photo5.jpg" onclick="openModal(this.src)">
-        <img src="photo6.jpg" onclick="openModal(this.src)">
+      <div class="cta-row">
+        <button class="btn" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">View profile</button>
+        <!-- Changed: Photos button now scrolls to gallery instead of opening external drive -->
+        <button class="btn secondary" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})" aria-controls="gallery">Photos</button>
+      </div>
     </div>
-</section>
 
-<section>
-    <h2>Photography</h2>
-    <p>
-        I also enjoy clicking photos and capturing moments from my travels and daily life.
-    </p>
-    <a href="https://drive.google.com/drive/folders/1ox7B_Vo7VDCK2iH6SKPbChwAjhIxgaQN" target="_blank">
-        <button>View My Photos</button>
-    </a>
-</section>
+    <aside class="card profile-card" aria-labelledby="profile-title">
+      <div class="avatar" role="img" aria-label="Aijaz Khan avatar">AK</div>
+      <div class="profile-meta">
+        <h3 id="profile-title" style="margin:8px 0 0">Aijaz Khan</h3>
+        <div style="color:var(--muted);font-size:13px">Security Engineer — Bangalore</div>
+      </div>
+    </aside>
+  </section>
 
-<div id="myModal" class="modal" onclick="closeModal()">
-    <span class="close">&times;</span>
-    <img id="modalImg">
+  <!-- ABOUT -->
+  <section id="about" aria-labelledby="about-title">
+    <div class="section-head">
+      <h2 id="about-title">About Me</h2>
+      <div class="section-sub">Who I am, what I care about</div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text card">
+        <p>
+          I work as a Security Engineer, where I focus on building and improving secure systems. While I am passionate about my profession, I try not to let work define my entire personality.
+        </p>
+        <p>
+          Outside of work, I enjoy long trekking adventures, recently completing my dream trek to Mount Everest Base Camp, bike rides, and exploring new places. Being in nature helps me reset and stay grounded. I also enjoy playing the guitar, reading books, and constantly learning new things that broaden my perspective. I have a deep appreciation for Urdu poetry, as I find it beautifully expresses emotions and depth in a unique way.
+        </p>
+        <p>
+          Staying active, eating clean, and maintaining a disciplined routine are important parts of my lifestyle. I value spending quality time with family and close friends, and I try to stay involved in social work whenever possible, as giving back to the community matters to me.
+        </p>
+      </div>
+
+      <aside class="info-card">
+        <div style="font-weight:700;margin-bottom:8px">Snapshot</div>
+        <div class="info-row"><strong>Location</strong><span style="color:var(--muted)">Bangalore, India</span></div>
+        <div class="info-row"><strong>Born</strong><span style="color:var(--muted)">Arunachal Pradesh</span></div>
+        <div class="info-row"><strong>Role</strong><span style="color:var(--muted)">Security Engineer</span></div>
+        <div style="margin-top:12px">
+          <div style="font-size:13px;color:var(--muted)">Interests</div>
+          <div class="tags" style="margin-top:8px">
+            <div class="pill">Trekking</div>
+            <div class="pill">Biking</div>
+            <div class="pill">Photography</div>
+            <div class="pill">Urdu poetry</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+    <!-- PERSONAL LIFE -->
+  <section id="personal" aria-labelledby="personal-title">
+    <div class="section-head">
+      <h2 id="personal-title">Personal Life</h2>
+      <div class="section-sub">Background & family</div>
+    </div>
+
+    <div class="card">
+      <p>
+        I completed my Bachelor's degree in Computer Science Engineering (CSE) with a specialization in Cyber Security and Digital Forensics from VIT Bhopal.
+      </p>
+
+      <p>
+        I grew up in the North-Eastern part of India, Arunachal Pradesh. I spent the first 23 years of my life there before moving to Bangalore, where I am currently settled.
+      </p>
+
+      <p>
+        My father is a retired government engineer, and my mother is a homemaker. I have one elder brother who works at Dell and lives in Delhi, and a younger sister who is pursuing her Bachelor's degree in Computer Science from VIT.
+      </p>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section id="values" aria-labelledby="values-title">
+    <div class="section-head">
+      <h2 id="values-title">Personal Values</h2>
+      <div class="section-sub">What I'm looking for</div>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-card card">
+        <p>
+          I am looking for someone with whom I can build something real and meaningful. I do not believe two people are simply made for each other. I believe they choose each other, understand each other better with time, and grow into compatibility through effort and respect.
+        </p>
+      </div>
+
+      <div class="value-card card">
+        <p>
+          I also believe that two people will always have some things in common and some things completely different. What matters is enjoying the process of discovering those similarities and understanding the differences. Finding more common ground over time and appreciating each other’s individuality makes the bond stronger.
+        </p>
+      </div>
+
+      <div class="value-card card">
+        <p>
+          I hope to find a partner with whom I can travel, explore new places, try new hobbies, and enjoy both the exciting and ordinary moments of life, including the simple everyday chores like cooking and managing things together. I want us to grow together both personally and professionally, being each other’s biggest supporters, standing by one another during challenges, and celebrating each other’s achievements.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" aria-labelledby="gallery-title">
+    <div class="section-head">
+      <h2 id="gallery-title">Photo Gallery</h2>
+      <div class="section-sub">Moments from travels & life</div>
+    </div>
+
+    <div class="gallery" role="list">
+      <!-- Replace src with your images -->
+      <img src="photo1.jpg" alt="Photo 1" data-index="0" role="listitem">
+      <img src="photo2.jpg" alt="Photo 2" data-index="1" role="listitem">
+      <img src="photo3.jpg" alt="Photo 3" data-index="2" role="listitem">
+      <img src="photo4.jpg" alt="Photo 4" data-index="3" role="listitem">
+      <img src="photo5.jpg" alt="Photo 5" data-index="4" role="listitem">
+      <img src="photo6.jpg" alt="Photo 6" data-index="5" role="listitem">
+    </div>
+  </section>
+
+  <!-- PHOTOGRAPHY CTA -->
+  <section aria-labelledby="photo-title">
+    <div class="section-head">
+      <h2 id="photo-title">Photography</h2>
+      <div class="section-sub">Capture & share</div>
+    </div>
+
+    <div class="card phot-cta">
+      <p>I also enjoy clicking photos and capturing moments from my travels and daily life.</p>
+      <div style="display:flex;gap:12px">
+        <a target="_blank" rel="noopener noreferrer" href="https://drive.google.com/drive/folders/1ox7B_Vo7VDCK2iH6SKPbChwAjhIxgaQN">
+          <button class="btn">View My Photos</button>
+        </a>
+       
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" role="dialog" aria-hidden="true" aria-label="Image viewer">
+  <div class="lb-close" aria-hidden="true" onclick="closeLightbox()">✕</div>
+  <img id="lightbox-img" src="" alt="Expanded photo">
+  <div class="lb-nav" aria-hidden="true">
+    <button class="lb-btn" onclick="prevImg()">◀ Prev</button>
+    <button class="lb-btn" onclick="nextImg()">Next ▶</button>
+  </div>
 </div>
 
-<footer>
-    © 2026 Aijaz Khan | Designed with intention
-</footer>
-
 <script>
-function openModal(src) {
-    document.getElementById("myModal").style.display = "block";
-    document.getElementById("modalImg").src = src;
-}
+  // Smooth anchor behavior for older browsers
+  document.querySelectorAll('a[href^="#"], button[onclick*="scrollIntoView"]').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      // allow default for external links
+    });
+  });
 
-function closeModal() {
-    document.getElementById("myModal").style.display = "none";
-}
+  // Gallery -> Lightbox logic
+  const imgs = Array.from(document.querySelectorAll('.gallery img'));
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightbox-img');
+  let idx = 0;
+
+  function openLightboxAt(i){
+    if (!imgs.length) return;
+    idx = (i+imgs.length) % imgs.length;
+    lbImg.src = imgs[idx].src;
+    lbImg.alt = imgs[idx].alt || 'Photo';
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox(){
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
+  function prevImg(){ openLightboxAt(idx-1) }
+  function nextImg(){ openLightboxAt(idx+1) }
+
+  imgs.forEach((img,i)=>{
+    img.addEventListener('click', ()=> openLightboxAt(i));
+    img.addEventListener('keydown', (e)=>{ if(e.key==='Enter') openLightboxAt(i) });
+  });
+
+  // open/close keyboard support
+  document.addEventListener('keydown', (e)=>{
+    if(lb.classList.contains('open')){
+      if(e.key === 'Escape') closeLightbox();
+      if(e.key === 'ArrowLeft') prevImg();
+      if(e.key === 'ArrowRight') nextImg();
+    }
+  });
+
+  // small function used by photography CTA
+  function openGallery(){ openLightboxAt(0) }
+
+  // Intersection reveal for subtle entrance (reduced motion respected)
+  if(window.matchMedia && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const observer = new IntersectionObserver((entries)=>{
+      for(const ent of entries){
+        if(ent.isIntersecting){
+          ent.target.style.opacity = 1;
+          ent.target.style.transform = 'none';
+          observer.unobserve(ent.target);
+        }
+      }
+    }, {threshold: 0.12});
+
+    // set initial state
+    document.querySelectorAll('section, .card, .value-card, .gallery img').forEach(el=>{
+      el.style.opacity = 0;
+      el.style.transform = 'translateY(18px)';
+      el.style.transition = 'opacity .6s ease, transform .6s ease';
+      observer.observe(el);
+    });
+  }
+
+  // small accessibility: focus management when opening lightbox
+  lb.addEventListener('click', (e)=>{
+    if(e.target === lb) closeLightbox();
+  });
+
+  // If JS disabled, ensure links still work (progressive enhancement)
 </script>
 
 </body>
